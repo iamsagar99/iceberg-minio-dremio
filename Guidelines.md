@@ -27,27 +27,49 @@
             - First Open minio from localhost:9001 and create access keys
             - Give a s3 bucket name like warehouse/
             - Below there is connection properties , where need to fill following things:
-                -     fs.s3a.path.style.access true
-                -     dremio.s3.compat true
-                -     fs.s3a.endpoint minio:9000
+       
+                -     fs.s3a.path.style.access = true
+       
+                -     dremio.s3.compat = true
+       
+                -     fs.s3a.endpoint = minio:9000
+       
             - Don't need to encrypt in localhost
     Let's save then we can browse the catalog.
 
-    2. Iceberg default catalog: 
-        i. General 
-            - Source Amazon s3 
+    3. Iceberg default catalog: 
+        i. General
+       
+            - Source Amazon s3
+       
             - give access keys
+       
         ii. Advance options:
             Set the following true:
+       
             - Enable asynchronous access when possible
+       
             - Enable compatibility mode
+       
             - Enable file status check
+       
             Default CTAS format: Iceberg
+       
             Root path: /
+       
             fs.s3a.path.style.access true
+       
             fs.s3a.endpoint minio:9000
+       
     Let's save and connect.
 
+### Airflow Setup
+   ```bash
+    docker-compose run --rm airflow-webserver airflow db init
+    docker-compose run --rm airflow-webserver airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com
+    docker-compose up -d airflow-scheduler airflow-webserver
+
+   ```
 
  
 
